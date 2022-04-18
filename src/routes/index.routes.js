@@ -151,9 +151,9 @@ router.post("/login-succesfully", async (req, res) => {
         }
     );
 
-    console.log(req.body.email);
+    console.log(req.body);
 
-    console.log(userLoggedData.email);
+    console.log(userLoggedData);
 
     if(userLoginData !== userLoggedData) {
         loginError.push({error: "Los datos introducidos no son correctos o no estan registrados en la web, revisa de nuevo!"});
