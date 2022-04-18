@@ -110,7 +110,6 @@ router.post("/register-succesfully", async (req, res) => {
     };
 
    // Si existen errores en el array se devuelven estos errores
-   console.log(errorClient);
     if(errorClient.length > 0) {
         res.render("login-register", { errorClient });
     } else {
@@ -125,7 +124,7 @@ router.post("/register-succesfully", async (req, res) => {
 // user save login
 
 router.post("/login-succesfully", async (req, res) => {
-    const userLoginData = usersSchm(req.body);
+    const userLoginData = req.body;
 
     let loginError = [];
 
@@ -137,8 +136,6 @@ router.post("/login-succesfully", async (req, res) => {
             _id: 1
         }
     );
-
-    console.log(userID);
 
     const userLoggedData = await usersSchm.findOne(
         {
@@ -153,10 +150,10 @@ router.post("/login-succesfully", async (req, res) => {
             email: 1,
         }
     );
-    
-    console.log(userLoginData);
-    console.log("========");
-    console.log(userLoggedData);
+
+    console.log(req.body.email);
+
+    console.log(userLoggedData.email);
 
     if(userLoginData !== userLoggedData) {
         loginError.push({error: "Los datos introducidos no son correctos o no estan registrados en la web, revisa de nuevo!"});

@@ -11,7 +11,7 @@ const app = express();
 // Configuracion de express (archivos estaticos, etc...)
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(router);
 
 // multer config
