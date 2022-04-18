@@ -1,11 +1,9 @@
 import { Router } from "express";
-import multer from "multer";
 import productSchm from "../models/productSchm";
 import role from "../models/roleSchm";
 import usersSchm from "../models/usersSchm";
 
 const router = Router();
-const upload = multer({dest: "upload/"})
 
 // Ruta inicial
 
@@ -64,7 +62,7 @@ router.post("/products/saveproducts", async (req, res) => {
     // Si el producto ya existe por nombre, se deniga el nuevo producto, por que ya existe
     if (productData.name === productNameQuery) {
         errorProducts.push({text: `El producto ya existe por que el nombre es el mismo que: ${productData.name}`})
-    }
+    };
 
     // Si hay errores se muetran esos errores por pantalla
     if(errorProducts.length > 0) {
@@ -72,10 +70,10 @@ router.post("/products/saveproducts", async (req, res) => {
     } else {
         await productData.save();
         res.redirect("/products");
-    }
+    };
 });
 
-// <=========== User  ===========> //
+// <=========== User ===========> //
 
 // user save register
 
@@ -155,4 +153,5 @@ router.post("/login-succesfully", async (req, res) => {
 router.get("/user/:_id", (req,res) => {
     res.render(req.param._id);
 });
+
 export default router;
