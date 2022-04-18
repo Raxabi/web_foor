@@ -1,4 +1,5 @@
 import { Router } from "express";
+import multer from "multer";
 import productSchm from "../models/productSchm";
 import role from "../models/roleSchm";
 import usersSchm from "../models/usersSchm";
@@ -54,6 +55,7 @@ router.get("/addproducts", async(req, res) => {
 
 router.post("/products/saveproducts", async (req, res) => {
     const productData = productSchm(req.body);
+    console.log(req.file)
     let errorProducts = [];
     const productNameQuery = await productSchm.find({
         "name": productData.name
@@ -127,22 +129,43 @@ router.post("/login-succesfully", async (req, res) => {
 
     let loginError = [];
 
-    const userLoggedData = await usersSchm.findOne({
-        "name": userLoginData.name,
-        "password": userLoginData.password,
-        "email": userLoginData.email
-    });
-    
-    if(userLoginData !== userLoggedData) {
-        loginError.push({error: "Los datos introducidos no estan registrados en la web! El usuario no esta creado"});
-    };
+    const userID = await usersSchm.findOne(
+        {
+            "name": userLoginData.name
+        },
+        {
+            _id: 1
+        }
+    );
 
-    console.log(loginError);
+    console.log(userID);
+
+    const userLoggedData = await usersSchm.findOne(
+        {
+            "name": userLoginData.name,
+            "password": userLoginData.password,
+            "email": userLoginData.email
+        },
+        {
+            _id: 0,
+            name: 1,
+            password: 1,
+            email: 1,
+        }
+    );
+    
+    console.log(userLoginData);
+    console.log("========");
     console.log(userLoggedData);
+
+    if(userLoginData !== userLoggedData) {
+        loginError.push({error: "Los datos introducidos no son correctos o no estan registrados en la web, revisa de nuevo!"});
+    };
     if (loginError.length > 0) {
         res.render("login", { loginError });
     } else {
         setTimeout(_ => {
+            let _id = userID
             res.redirect("/");
         }, 1777);
     };
@@ -150,8 +173,8 @@ router.post("/login-succesfully", async (req, res) => {
 
 // User profile
 
-router.get("/user/:_id", (req,res) => {
-    res.render(req.param._id);
+router.get("/user/:_id", async (req,res) => {
+    
 });
 
 export default router;

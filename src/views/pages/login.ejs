@@ -1,9 +1,9 @@
 <%- include ("../partials/main-header") %>
 <title>Inicia sesión</title>
 <% if (typeof loginError !== "undefined") { %>
-    <% loginError.forEach(function() { %>
+    <% loginError.forEach(function(error) { %>
         <div class="alert alert-info warning-info-alert m-auto mt-3" role="alert">
-            <h3> <%= loginError.error %> </h3>
+            <h4> <%= error.error %> </h4>
         </div>
     <%})%>
 <%}%>

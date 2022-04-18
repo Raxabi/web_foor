@@ -11,15 +11,14 @@ const app = express();
 // Configuracion de express (archivos estaticos, etc...)
 
 app.use(express.static(path.join(__dirname, "public")));
-
 app.use(express.urlencoded({ extended: false }));
 app.use(router);
 
 // multer config
 
-app.use(multer({
+/* app.use(multer({
     dest: "data/",
-}));
+})); */
 
 // Configuracion del gestor de plantillas
 app.set("view engine", "ejs");
