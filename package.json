@@ -1,0 +1,26 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "Forraje Web",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec npx babel-node src/index.js"
+  },
+  "keywords": [],
+  "author": "Sibani. Inc",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "16.0.0",
+    "ejs": "3.0.2",
+    "express": "4.17.3",
+    "mongoose": "6.2.10",
+    "multer": "1.4.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.17.6",
+    "@babel/core": "7.17.8",
+    "@babel/node": "7.16.8",
+    "@babel/preset-env": "7.16.11",
+    "nodemon": "2.0.15"
+  }
+}

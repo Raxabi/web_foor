@@ -1,0 +1,24 @@
+@font-face {
+    font-family: roboto;
+    src: url(../resources/fonts/Roboto/Roboto-Light.ttf );
+}
+
+.form-width {
+    width: 45rem;
+}
+
+#products-container {
+    width: 100rem;
+}
+
+.card-width {
+    width: 20rem;
+}
+
+.warning-info-alert {
+    width: 40rem;
+}
+
+.navbar-items:hover {
+    font-weight: bolder;
+}

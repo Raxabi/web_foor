@@ -1,0 +1,74 @@
+<%- include ("../partials/main-header") -%>
+<title>Registrate</title>
+<% if (typeof errorClient !== "undefined") { %>
+    <% errorClient.forEach(function(error) { %>
+        <div class="alert alert-warning m-auto mt-3 warning-info-alert" role="alert">
+            <h4> <%= error.text %> </h4>
+        </div>
+    <%})%>
+<%}%>
+
+<form action="/register-succesfully" method="post" class="border border-3 rounded m-auto mt-5 p-5" id="register-login-form">
+    <div class="mb-3">
+        <label for="UserName" class="form-label">Nombre de usuario</label>
+        <input type="text" required autofocus name="name" class="form-control" placeholder="Puede ser un nombre ficticio o un nombre real" aria-describedby="UserNickname">
+        <div class="form-text">
+            Sera el nombre que otros usuarios vean en el sitio web<br>
+            (En lugares como reseñas, por ejemplo.)
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="UserPassword" class="form-label">Contraseña</label>
+        <input type="password" required name="password" class="form-control" placeholder="Elige una contraseña segura, ¡Es muy importante!" aria-describedby="UserPassword">
+    </div>
+    <div class="mb-3">
+        <label for="UserRepeatPassword">Repite tu contraseña</label>
+        <input type="password" required name="repeat_password" class="form-control" placeholder="Repite la contraseña que acabas de poner" aria-describedby="UserRepeatPassword">
+    </div>
+    <div class="mb-3">
+        <label for="EmailUserAddres" class="form-label">Direccion de correo</label>
+        <input type="email" required name="email" class="form-control" placeholder="Introduce tu correo electronico, ahí manderemos la información de los pedidos" aria-describedby="EmailUserAddres">
+        <div class="form-text">
+            No compartiremos esta informacioón personal y confidencial con nadie
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="YearsOldUser" class="form-label">Introduce tu fecha de nacimiento</label>
+        <input type="date" required name="date" class="form-control" aria-describedby="YearsOldUser">
+        <div class="form-text">
+            Debes de ser mayor de edad, para crear una cuenta.<br>
+            Esto debido a motivos de seguridad legales
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="userAddress" class="form-label">Introduce la direccion de domicilio</label>
+        <input type="text" required name="userAddress" class="form-control" placeholder="Introduce informacion que nos ayude a encontrate" aria-describedby="userAddress">
+        <div class="form-text">
+            La dirección de tu domicilio es necesaria para el envio de los productos<br>
+            Introduce información como el nombre de la calle, el numero de puerta, piso, etc...
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="UserLocation" class="form-label">Introduce tu localidad actual</label>
+        <input type="text" required name="location" class="form-control" placeholder="Introduce la pronvicia en la que resides actualmente" aria-describedby="UserLocation">
+    </div>
+    <div class="mb-3">
+        <label for="UserCountry" class="form-label">Introduce tu Nacionalidad</label>
+        <input list="Country" required name="nacionality" class="form-control" aria-describedby="UserCountry">
+        <datalist id="Country">
+            <option value="Spain"></option>
+        </datalist>
+    </div>
+    <div class="mb-3">
+        <label for="userPhoneNumber" class="form-label">Introduce tu numero de teléfono</label>
+        <input type="tel" required name="userPhoneNumber" pattern="+34 [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}" placeholder="Ejemplo: +34 698 64 92 70" class="form-control" aria-describedby="userPhoneNumber">
+        <div class="form-text">
+            Debes introducir un numero de teléfono español<br>
+            En un futuro nos expanderemos mas nuestra capacidad de envio.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success mb-3">Registrarse</button>
+    <div class="form-text">
+        ¿Ya tienes una cuenta?. ¡Inicia sesión <a href="/login">aqui!</a>
+    </div>
+</form>

@@ -1,0 +1,24 @@
+<%- include ("../partials/main-header") %>
+<title>Productos</title>
+
+<h4 class="text-center mt-3">En esta pagina encontraras todos los productos disponibles en nuestra web</h4>
+
+<div class="border border-5 m-4 px-3 rounded row row-cols">
+    <% productsToDisplay.forEach(function(product) { %>
+        <div class="card card-width ms-4-5 me-4-5 mt-3 mb-3">
+            <img src="" alt="">
+            <div class="card-body">
+                <h4 class="card-title"><%= product.name %></h4>
+                <p class="card-text">
+                    <%= product.shortDescription %>
+                </p>
+                <p class="card-text">
+                    Fabricado por: <%= product.vendor %>
+                </p>
+                <a href="/" class="btn btn-primary" role="button">Comprar por <%= product.price %>€</a>
+            </div>
+        </div>
+    <%})%>
+</div>
+
+<%- include("../partials/main-footer") %>

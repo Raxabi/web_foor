@@ -1,0 +1,36 @@
+<%- include ("../partials/main-header") %>
+<title>Inicia sesión</title>
+<% if (typeof loginError !== "undefined") { %>
+    <% loginError.forEach(function() { %>
+        <div class="alert alert-info warning-info-alert m-auto mt-3" role="alert">
+            <h3> <%= loginError.error %> </h3>
+        </div>
+    <%})%>
+<%}%>
+
+<form action="/login-succesfully" method="post" class="border border-3 rounded m-auto mt-5 p-5" id="register-login-form">
+    <div class="mb-3">
+        <div class="form-text mb-3">
+            Debe de introducir los datos que uso cuando creo su cuenta
+        </div>
+        <label for="UserName" class="form-label">Nombre de usuario</label>
+        <input type="text" required name="name" class="form-control" aria-describedby="UserNickname">      
+    </div>
+    <div class="mb-3">
+        <label for="UserPassword" class="form-label">Contraseña</label>
+        <input type="password" required name="password" class="form-control" placeholder="¡Acuerdate de tu contraseña!, la vas a nacesitar" aria-describedby="UserPassword">
+    </div>
+    <div class="mb-3">
+        <label for="EmailUserAddres" class="form-label">Direccion de correo</label>
+        <input type="email" required name="email" class="form-control" placeholder="Introduce tu correo electronico para poder verificar que eres tu" aria-describedby="EmailUserAddres">
+    </div>
+    <div class="form-text">
+        ¿Tienes problemas para iniciar sesión?<br>
+        Aún no contamos con un sistema de recuperacion de contraseñas, el cual pronto implementaremos<br>
+        Si realmente tienes problemas, mandanos un correo electronico aqui <a class=""></a>
+    </div>
+    <button type="submit" class="btn btn-success mb-3">Iniciar Sesión</button>
+    <div class="form-text">
+        ¿Aún no tienes una cuenta?. ¡Registrate <a href="/login-register">aqui!</a>
+    </div>
+</form>
