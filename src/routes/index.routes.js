@@ -74,18 +74,35 @@ router.post("/products/saveproducts", async (req, res) => {
     };
 });
 
-// <=========== User ===========> //
-
-// user save register
+// <=========== User Register ===========> //
 
 router.post("/register-succesfully", async (req, res) => {
-    const userRegisterFetchedToDataBase = usersSchm(req.body);
-    const userRegisterFetched = req.body
-    const errorClient = [];
+    const userRegisterFetchedToDataBase = usersSchm(req.body); // its dont parse the "repeat password" field to database
+    const userRegisterFetched = req.body // its dont parse the "repeat password" but its used as a comparation with the first password field
+    
+    let errorClient = [];
 
-    const userNameQuery = await usersSchm.find({"name": userRegisterFetched.name});
-
-    const userEmailQuery = await usersSchm.find({"email": userRegisterFetched.email});
+    // Consulta en la base de datos si un nombre existe
+    const userNameQuery = await usersSchm.findOne(
+        {
+            "name": userRegisterFetched.name
+        },
+        {
+            "_id": 0,
+            "name": 1
+        }
+    );
+    
+    // Consulta en la base de datos si el email ya esta en uso
+    const userEmailQuery = await usersSchm.findOne(
+        {
+            "email": userRegisterFetched.email
+        },
+        {
+            "_id": 0,
+            "email": 1
+        }
+    );
 
     // Si la contraseña no cumple con los requisitos
     if(userRegisterFetchedToDataBase.password.length <= 0) {
@@ -94,12 +111,19 @@ router.post("/register-succesfully", async (req, res) => {
         errorClient.push({text: "La contraseña debe de tener una longitud de 8 caracteres como minimo!"});
     };
 
+    // Convertimos los datos del req.body a json para que puedans er validados
+
+    const user_Register_Name_To_JSON = JSON.stringify(userRegisterFetched.name);
+    const user_Register_Email_To_JSON = JSON.stringify(userRegisterFetched.email);
+    const user_Email_Query_To_JSON = JSON.stringify(userEmailQuery);
+    const user_Name_Query_To_JSON = JSON.stringify(userNameQuery);
+
     // SI los datos ya existen en la base de datos, se deniega el registro
-    if(userRegisterFetchedToDataBase.name === userNameQuery) {
-        errorClient.push({text: "El nombre ya esta en uso, elige otro nombre!"})
-    } else if(userRegisterFetchedToDataBase.email === userEmailQuery) {
-        errorClient.push({text: "El email ingresado ya esta en uso, usa otra cuenta de correo o inicia sesion si la cuenta es tuya"})
-    }
+    if(user_Register_Name_To_JSON === user_Name_Query_To_JSON) {
+        errorClient.push({text: "El nombre ya esta en uso, elige otro nombre!"});
+    } else if(user_Register_Email_To_JSON === user_Email_Query_To_JSON) {
+        errorClient.push({text: "El email ingresado ya esta en uso, usa otra cuenta de correo o inicia sesion si la cuenta es tuya"});
+    };
 
     // Si la contraseña y la contraseña repetida no coinciden
     if(userRegisterFetched.repeat_password !== userRegisterFetched.password) {
@@ -107,6 +131,8 @@ router.post("/register-succesfully", async (req, res) => {
     } else if(userRegisterFetched.password !== userRegisterFetched.repeat_password) {
         errorClient.push({text: "La contraseña original no coincide con al contraseña repetida, vuelve a intentarlo"});
     };
+
+    console.log(user_Email_Query_To_JSON);
 
    // Si existen errores en el array se devuelven estos errores
     if(errorClient.length > 0) {
@@ -120,7 +146,7 @@ router.post("/register-succesfully", async (req, res) => {
     };
 });
 
-// user save login
+// <=========== User Login ===========> //
 
 router.post("/login-succesfully", async (req, res) => {
     const userLoginData = req.body;
@@ -164,8 +190,7 @@ router.post("/login-succesfully", async (req, res) => {
         res.render("login", { loginError });
     } else {
         setTimeout(_ => {
-            let _id = userID
-            res.redirect("/");
+            res.redirect(req.params._id);
         }, 1777);
     };
 });

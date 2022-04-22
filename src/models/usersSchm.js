@@ -42,10 +42,10 @@ const user = new Schema({
         required: true,
         trim: true
     },
-    rol : {
+    /* rol: {
         ref: "role",
         type: Schema.Types.ObjectId
-    }
+    } */
 },
     {
         timestamps: true,
