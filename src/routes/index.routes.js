@@ -1,5 +1,4 @@
 import { Router } from "express";
-import multer from "multer";
 import productSchm from "../models/productSchm";
 import role from "../models/roleSchm";
 import usersSchm from "../models/usersSchm";
@@ -128,16 +127,18 @@ router.post("/login-succesfully", async (req, res) => {
 
     let loginError = [];
 
+    // Obtenemos el id para redireccionar a la pagina del mismo
     const userID = await usersSchm.findOne(
         {
             "name": userLoginData.name
         },
         {
-            _id: 1
+            "_id": 1
         }
     );
 
-    const userLoggedData = await usersSchm.findOne(
+    // validamos por el nombre, contraseña y email
+    const userAlreadyRegisteredData = await usersSchm.findOne(
         {
             "name": userLoginData.name,
             "password": userLoginData.password,
@@ -151,11 +152,12 @@ router.post("/login-succesfully", async (req, res) => {
         }
     );
 
-    console.log(req.body);
-
-    console.log(userLoggedData);
-
-    if(userLoginData !== userLoggedData) {
+    // Convertimos los objetos a objetos json para poder compararlos
+    
+    const user_Login_Data = JSON.stringify(userLoginData);
+    const user_Already_Registered_Data_To_Json = JSON.stringify(userAlreadyRegisteredData);
+    
+    if(user_Login_Data !== user_Already_Registered_Data_To_Json) {
         loginError.push({error: "Los datos introducidos no son correctos o no estan registrados en la web, revisa de nuevo!"});
     };
     if (loginError.length > 0) {
