@@ -1,7 +1,10 @@
 import express from "express";
 import path from "path";
 import multer from "multer";
+/* import bcrypt from "bcrypt" */
 import "dotenv/config";
+
+// Import Files
 import "./connection/connection";
 import router from "./routes/index.routes";
 import multerConfig from "./multer.config";

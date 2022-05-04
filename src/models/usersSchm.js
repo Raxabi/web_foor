@@ -4,13 +4,11 @@ const user = new Schema({
     name: {
         type: String,
         required: true,
-        //unique: true
     },
     password: {
         type: String,
         trim: true,
         minlength: 8,
-        maxlength: 20,
         required: true
     },
     

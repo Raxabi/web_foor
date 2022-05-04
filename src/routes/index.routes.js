@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { faker } from "@faker-js/faker"
 import productSchm from "../models/productSchm";
 import role from "../models/roleSchm";
 import usersSchm from "../models/usersSchm";
@@ -132,9 +133,12 @@ router.post("/register-succesfully", async (req, res) => {
         errorClient.push({text: "La contraseña original no coincide con al contraseña repetida, vuelve a intentarlo"});
     };
 
-    console.log(user_Email_Query_To_JSON);
-
    // Si existen errores en el array se devuelven estos errores
+
+  /*  const finalDataSave = JSON.parse({
+    "name": user_Register_Name_To_JSON
+   }); */
+
     if(errorClient.length > 0) {
         res.render("login-register", { errorClient });
     } else {
@@ -190,15 +194,19 @@ router.post("/login-succesfully", async (req, res) => {
         res.render("login", { loginError });
     } else {
         setTimeout(_ => {
-            res.redirect(req.params._id);
+            res.redirect("/user/:_id");
         }, 1777);
     };
 });
 
 // User profile
 
-router.get("/user/:_id", async (req,res) => {
-    
-});
+/* router.get("/user/:_id", async (req, res) => {
+    let userID = await usersSchm.findOne({});
+
+    userID = req.params._;
+
+    res.render("")
+}); */
 
 export default router;
