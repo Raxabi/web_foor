@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { faker } from "@faker-js/faker"
+import bcrypt from "bcrypt";
 import productSchm from "../models/productSchm";
 import role from "../models/roleSchm";
 import usersSchm from "../models/usersSchm";
@@ -133,16 +134,24 @@ router.post("/register-succesfully", async (req, res) => {
         errorClient.push({text: "La contraseña original no coincide con al contraseña repetida, vuelve a intentarlo"});
     };
 
-   // Si existen errores en el array se devuelven estos errores
+    const hashedPassword = bcrypt.hashSync(userRegisterFetchedToDataBase.password, 777);
 
-  /*  const finalDataSave = JSON.parse({
-    "name": user_Register_Name_To_JSON
-   }); */
+    const finalSaveData = {
+        name: userRegisterFetchedToDataBase.name,
+        password: hashedPassword,
+        email: userRegisterFetchedToDataBase.email,
+        date: userRegisterFetchedToDataBase.date,
+        userAddress: userRegisterFetchedToDataBase.userAddress,
+        location: userRegisterFetchedToDataBase.location,
+        naciolality: userRegisterFetchedToDataBase.naciolality,
+        userPhoneNumber: userRr
+    };
 
+    // Si existen errores en el array se devuelven estos errores
     if(errorClient.length > 0) {
         res.render("login-register", { errorClient });
     } else {
-        await userRegisterFetchedToDataBase.save();
+        await finalSaveData.save();
         console.log("New user Saved");
         setTimeout(_ => {
             res.redirect("/");
