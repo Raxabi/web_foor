@@ -2,6 +2,9 @@ import express from "express";
 import path from "path";
 import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage";
+import passport from "passport";
+import GoogleStrategy from "passport-google-oidc";
+import util from "util";
 import "dotenv/config";
 
 // Import Files
@@ -16,7 +19,9 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(router);
-passport.use(new GoogleStrategy({
+
+// Google Authentication with passport.js config from official documentation
+/* passport.use(new GoogleStrategy({
     clientID: process.env['GOOGLE_CLIENT_ID'],
     clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
     callbackURL: '/oauth2/redirect/google',
@@ -55,12 +60,12 @@ passport.use(new GoogleStrategy({
         });
       }
     });
-  }));
+})); */
 
-// multer config
+// multer config to upload files to mongodb from official documentation
 
 let storage = new GridFsStorage({
-    url: dbConfig.url + dbConfig.database,
+    url: `${process.env.FORRAJE_HOST}` + `${process.env.FORRAJE_DATABASE}`,
     options: { useNewUrlParser: true, useUnifiedTopology: true },
     file: (req, file) => {
       const match = ["image/png", "image/jpeg"];
@@ -77,10 +82,6 @@ let storage = new GridFsStorage({
   let uploadFiles = multer({ storage: storage }).single("file");
   let uploadFilesMiddleware = util.promisify(uploadFiles);
   module.exports = uploadFilesMiddleware;
-
-/* app.use(multer({
-    dest: "data/",
-})); */
 
 // Configuracion del gestor de plantillas
 app.set("view engine", "ejs");
