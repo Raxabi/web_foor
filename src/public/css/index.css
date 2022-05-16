@@ -15,6 +15,10 @@
     width: 20rem;
 }
 
+#login-moment {
+    width: max-content;
+}
+
 .warning-info-alert {
     width: 40rem;
 }

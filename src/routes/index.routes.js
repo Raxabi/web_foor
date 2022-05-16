@@ -1,6 +1,10 @@
 import { Router } from "express";
-import { faker } from "@faker-js/faker"
+import { faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
+import passport from "passport";
+import googlepassport from "passport-google-oidc";
+
+// Import Files
 import productSchm from "../models/productSchm";
 import role from "../models/roleSchm";
 import usersSchm from "../models/usersSchm";
@@ -11,7 +15,11 @@ const router = Router();
 
 router.get("/", (req, res) => {
     res.render("index");
+    console.log("Cookie:", req.cookies);
+    console.log("Signed Cookies:", req.signedCookies);
 });
+
+// Iniciar sesion con Google
 
 // register
 
@@ -21,9 +29,7 @@ router.get("/register", (req, res) => {
 
 // login
 
-router.get("/login", (req,res) => {
-    res.render("login");
-});
+router.get("/login/federated/google", passport.authenticate('google'));
 
 router.get("/services", (req, res) => {
     res.render("services");
@@ -144,7 +150,7 @@ router.post("/register-succesfully", async (req, res) => {
         userAddress: userRegisterFetchedToDataBase.userAddress,
         location: userRegisterFetchedToDataBase.location,
         naciolality: userRegisterFetchedToDataBase.naciolality,
-        userPhoneNumber: userRr
+        userPhoneNumber: userRegisterFetchedToDataBase.userPhoneNumber
     };
 
     // Si existen errores en el array se devuelven estos errores

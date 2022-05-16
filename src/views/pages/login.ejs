@@ -1,14 +1,21 @@
 <%- include ("../partials/main-header") %>
 <title>Inicia sesión</title>
-<% if (typeof loginError !== "undefined") { %>
+<!-- <% if (typeof loginError !== "undefined") { %>
     <% loginError.forEach(function(error) { %>
         <div class="alert alert-info warning-info-alert m-auto mt-3" role="alert">
             <h4> <%= error.error %> </h4>
         </div>
     <%})%>
-<%}%>
+<%}%> -->
 
-<form action="/login-succesfully" method="post" class="border border-3 rounded m-auto mt-5 p-5" id="register-login-form">
+<div class="m-auto mt-5">
+    <h4 class="text-center m-auto p-3 bg-dark text-white border border-5" id="login-moment">
+        Por ahora solo tenemos la opcion de iniciar sesión con Google<br>
+        Pronto estara disponible la opcion de iniciar sesion con un sistema propietario
+    </h4>
+</div>
+
+<!-- <form action="/login-succesfully" method="post" class="border border-3 rounded m-auto mt-5 p-5" id="register-login-form">
     <div class="mb-3">
         <div class="form-text mb-3">
             Debe de introducir los datos que uso cuando creo su cuenta
@@ -33,4 +40,4 @@
     <div class="form-text">
         ¿Aún no tienes una cuenta?. ¡Registrate <a href="/login-register">aqui!</a>
     </div>
-</form>
+</form> -->
