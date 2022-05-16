@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import multer from "multer";
-/* import bcrypt from "bcrypt" */
+import { GridFsStorage } from "multer-gridfs-storage";
 import "dotenv/config";
 
 // Import Files
@@ -58,6 +58,25 @@ passport.use(new GoogleStrategy({
   }));
 
 // multer config
+
+let storage = new GridFsStorage({
+    url: dbConfig.url + dbConfig.database,
+    options: { useNewUrlParser: true, useUnifiedTopology: true },
+    file: (req, file) => {
+      const match = ["image/png", "image/jpeg"];
+      if (match.indexOf(file.mimetype) === -1) {
+        const filename = `${Date.now()}-bezkoder-${file.originalname}`;
+        return filename;
+      }
+      return {
+        bucketName: dbConfig.imgBucket,
+        filename: `${Date.now()}-bezkoder-${file.originalname}`
+      };
+    }
+  });
+  let uploadFiles = multer({ storage: storage }).single("file");
+  let uploadFilesMiddleware = util.promisify(uploadFiles);
+  module.exports = uploadFilesMiddleware;
 
 /* app.use(multer({
     dest: "data/",
