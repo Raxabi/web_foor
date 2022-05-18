@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
+import passport from "passport"
 
 // Import Files
 import productSchm from "../models/productSchm";

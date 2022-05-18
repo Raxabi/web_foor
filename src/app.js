@@ -5,12 +5,10 @@ import { GridFsStorage } from "multer-gridfs-storage";
 import passport from "passport";
 import GoogleStrategy from "passport-google-oidc";
 import util from "util";
-import "dotenv/config";
-
+import { config } from "dotenv";
 // Import Files
 import "./connection/connection";
 import router from "./routes/index.routes";
-import multerConfig from "./multer.config";
 
 const app = express();
 
@@ -20,9 +18,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(router);
 
+// Morgan config
+
+if (config.NODE_ENV !== "production") {
+  const morgan = require("morgan");
+  app.use(morgan("dev", {stream: {write: message => logger.http(message)}}));
+};
+
 // Google Authentication with passport.js config from official documentation
 
-/* passport.use(new GoogleStrategy({
+passport.use(new GoogleStrategy({
     clientID: process.env['GOOGLE_CLIENT_ID'],
     clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
     callbackURL: '/oauth2/redirect/google',
@@ -61,9 +66,9 @@ app.use(router);
         });
       }
     });
-})); */
+}));
 
-// multer config to upload files to mongodb from official documentation
+// multer config to upload files to mongodb, from official documentation
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
