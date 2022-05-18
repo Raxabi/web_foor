@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(router);
 
 // Google Authentication with passport.js config from official documentation
+
 /* passport.use(new GoogleStrategy({
     clientID: process.env['GOOGLE_CLIENT_ID'],
     clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
@@ -64,24 +65,15 @@ app.use(router);
 
 // multer config to upload files to mongodb from official documentation
 
-let storage = new GridFsStorage({
-    url: `${process.env.FORRAJE_HOST}` + `${process.env.FORRAJE_DATABASE}`,
-    options: { useNewUrlParser: true, useUnifiedTopology: true },
-    file: (req, file) => {
-      const match = ["image/png", "image/jpeg"];
-      if (match.indexOf(file.mimetype) === -1) {
-        const filename = `${Date.now()}-bezkoder-${file.originalname}`;
-        return filename;
-      }
-      return {
-        bucketName: dbConfig.imgBucket,
-        filename: `${Date.now()}-bezkoder-${file.originalname}`
-      };
-    }
-  });
-  let uploadFiles = multer({ storage: storage }).single("file");
-  let uploadFilesMiddleware = util.promisify(uploadFiles);
-  module.exports = uploadFilesMiddleware;
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+var upload = multer({ storage: storage })
 
 // Configuracion del gestor de plantillas
 app.set("view engine", "ejs");
