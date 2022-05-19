@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(router);
 
 // Google Authentication with passport.js config from official documentation
-
+/* 
 passport.use(new GoogleStrategy({
     clientID: process.env['GOOGLE_CLIENT_ID'],
     clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
@@ -61,6 +61,7 @@ passport.use(new GoogleStrategy({
       }
     });
 }));
+*/
 
 // multer config to upload files to mongodb, from official documentation
 

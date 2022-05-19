@@ -1,12 +1,17 @@
 const objeto = {
-    "llave": "Valor del valor"
+    "llave": "Valor del valor",
+    "grifo": "Valor del grifo"
 };
 
-Object.keys(objeto).forEach(function(value){
-    console.log(objeto[value]);
-    let newValue = "nuevo valor del valor"
-    delete objeto[value];
-    objeto[value] = newValue
-});
+for (const data in objeto) {
+    //console.log(`Uso del for ... in en JavaScript: '${data}: ${objeto[data]}'`);
+    delete objeto[data]
+    objeto.llave[data] = "Segundas llaves"
+}
 
-console.log(objeto);
+console.log("Despues de eliminar la llave 'llave':", objeto);
+
+/* console.log("Keys:", Object.keys(objeto));
+console.log("Valores:", Object.values(objeto)); */
+
+//console.log(objeto);

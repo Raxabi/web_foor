@@ -112,6 +112,7 @@ router.post("/register-succesfully", async (req, res) => {
         }
     );
 
+    // <=========== Password Validation before be saved on MongoDB ===========> //
     // Si la contraseña no cumple con los requisitos
     if(userRegisterFetchedToDataBase.password.length <= 0) {
         errorClient.push({text: "La contraseña no puede estar vacia!"});
@@ -119,8 +120,8 @@ router.post("/register-succesfully", async (req, res) => {
         errorClient.push({text: "La contraseña debe de tener una longitud de 8 caracteres como minimo!"});
     };
 
-    // Convertimos los datos del req.body a json para que puedans er validados
-
+    // <=========== Data to JSON conversion ===========> //
+    // Convertimos los datos del objeto req.body a json para que los datos puedan ser validados
     const user_Register_Name_To_JSON = JSON.stringify(userRegisterFetched.name);
     const user_Register_Email_To_JSON = JSON.stringify(userRegisterFetched.email);
     const user_Email_Query_To_JSON = JSON.stringify(userEmailQuery);
@@ -143,12 +144,9 @@ router.post("/register-succesfully", async (req, res) => {
     const hashedPassword = bcrypt.hashSync(userRegisterFetchedToDataBase.password, 777);
 
     // Cambiamos el valor de la propiedad password en el objeto
-    Object.keys(userRegisterFetchedToDataBase).forEach(function(value){
-        //console.log(userRegisterFetchedToDataBase[value]);
-        let newValue = hashedPassword
-        delete userRegisterFetchedToDataBase.password[value];
-        userRegisterFetchedToDataBase[value] = newValue;
-    });
+    for (const data in userRegisterFetchedToDataBase) {
+        delete userRegisterFetchedToDataBase.password
+    }
 
     /* const finalSaveData = {
         name: userRegisterFetchedToDataBase.name,

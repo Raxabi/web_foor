@@ -7,7 +7,7 @@
     "dev": "nodemon --exec npx babel-node src/index.js"
   },
   "keywords": [],
-  "author": "Sibani Electronics. S.L",
+  "author": "Halley Software",
   "license": "Copyright",
   "dependencies": {
     "bcrypt": "5.0.1",
