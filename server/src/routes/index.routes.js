@@ -2,6 +2,7 @@ import { Router } from "express";
 import { faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
 import passport from "passport"
+import multer from "multer";
 
 // Import Files
 import productSchm from "../models/productSchm";
@@ -141,7 +142,15 @@ router.post("/register-succesfully", async (req, res) => {
 
     const hashedPassword = bcrypt.hashSync(userRegisterFetchedToDataBase.password, 777);
 
-    const finalSaveData = {
+    // Cambiamos el valor de la propiedad password en el objeto
+    Object.keys(userRegisterFetchedToDataBase).forEach(function(value){
+        //console.log(userRegisterFetchedToDataBase[value]);
+        let newValue = hashedPassword
+        delete userRegisterFetchedToDataBase.password[value];
+        userRegisterFetchedToDataBase[value] = newValue;
+    });
+
+    /* const finalSaveData = {
         name: userRegisterFetchedToDataBase.name,
         password: hashedPassword,
         email: userRegisterFetchedToDataBase.email,
@@ -150,7 +159,7 @@ router.post("/register-succesfully", async (req, res) => {
         location: userRegisterFetchedToDataBase.location,
         naciolality: userRegisterFetchedToDataBase.naciolality,
         userPhoneNumber: userRegisterFetchedToDataBase.userPhoneNumber
-    };
+    }; */
 
     // Si existen errores en el array se devuelven estos errores
     if(errorClient.length > 0) {

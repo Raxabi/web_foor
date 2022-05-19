@@ -6,7 +6,8 @@ import passport from "passport";
 import GoogleStrategy from "passport-google-oidc";
 import util from "util";
 import { config } from "dotenv";
-// Import Files
+
+// Import Config Files
 import "./connection/connection";
 import router from "./routes/index.routes";
 
@@ -17,13 +18,6 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(router);
-
-// Morgan config
-
-if (config.NODE_ENV !== "production") {
-  const morgan = require("morgan");
-  app.use(morgan("dev", {stream: {write: message => logger.http(message)}}));
-};
 
 // Google Authentication with passport.js config from official documentation
 
