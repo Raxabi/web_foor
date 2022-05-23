@@ -1,9 +1,9 @@
 <%- include ("../partials/main-header") -%>
 <title>Añade un producto</title>
 <% if (typeof errorProduct !== "undefined") { %>
-    <% errorProduct.forEach(function() { %>
+    <% errorProduct.forEach(function(error) { %>
         <div class="alert alert-warning m-auto mt-3 warning-info-alert" role="alert">
-            <h3> <%= errorProduct %> </h3>
+            <h3> <%= error.text %> </h3>
         </div>
     <%})%>
 <%}%>

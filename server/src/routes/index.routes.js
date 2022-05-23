@@ -1,12 +1,9 @@
 import { Router } from "express";
-import { faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
-import passport from "passport"
-import multer from "multer";
+import passport from "passport";
 
 // Import Files
 import productSchm from "../models/productSchm";
-import role from "../models/roleSchm";
 import usersSchm from "../models/usersSchm";
 
 const router = Router();
@@ -72,6 +69,10 @@ router.post("/products/saveproducts", async (req, res) => {
     if (productData.name === productNameQuery) {
         errorProducts.push({text: `El producto ya existe por que el nombre es el mismo que: ${productData.name}`})
     };
+
+    if (productData.price < 0) {
+        errorProducts.push({text: "El producto no puede tener un valor menor a 0, esto podria ocasionar fallos en la base de datos"});
+    }
 
     // Si hay errores se muetran esos errores por pantalla
     if(errorProducts.length > 0) {
@@ -143,27 +144,16 @@ router.post("/register-succesfully", async (req, res) => {
 
     const hashedPassword = bcrypt.hashSync(userRegisterFetchedToDataBase.password, 777);
 
-    // Cambiamos el valor de la propiedad password en el objeto
-    for (const data in userRegisterFetchedToDataBase) {
-        delete userRegisterFetchedToDataBase.password
-    }
-
-    /* const finalSaveData = {
-        name: userRegisterFetchedToDataBase.name,
-        password: hashedPassword,
-        email: userRegisterFetchedToDataBase.email,
-        date: userRegisterFetchedToDataBase.date,
-        userAddress: userRegisterFetchedToDataBase.userAddress,
-        location: userRegisterFetchedToDataBase.location,
-        naciolality: userRegisterFetchedToDataBase.naciolality,
-        userPhoneNumber: userRegisterFetchedToDataBase.userPhoneNumber
-    }; */
+    // Cambiamos el valor de la propiedad password en el objeto req.body
+    Object.keys(userRegisterFetchedToDataBase).map(keys => {
+        userRegisterFetchedToDataBase.password = hashedPassword
+    });
 
     // Si existen errores en el array se devuelven estos errores
     if(errorClient.length > 0) {
         res.render("login-register", { errorClient });
     } else {
-        await finalSaveData.save();
+        await userRegisterFetchedToDataBase.save();
         console.log("New user Saved");
         setTimeout(_ => {
             res.redirect("/");
