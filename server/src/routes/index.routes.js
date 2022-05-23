@@ -44,14 +44,14 @@ router.get("/products", async (req, res) => {
 // each product
 
 router.get("/products/:name", async (req, res) => {
-    const findProduct = await productSchm.find({
+    const name = await productSchm.find({
         "name": req.params.name
     });
 });
 
 // add a product, get type
 
-router.get("/addproducts", async(req, res) => {
+router.get("/addproducts", (req, res) => {
     res.render("add-products");
 });
 
@@ -59,8 +59,9 @@ router.get("/addproducts", async(req, res) => {
 
 router.post("/products/saveproducts", async (req, res) => {
     const productData = productSchm(req.body);
-    console.log(req.file)
+    
     let errorProducts = [];
+
     const productNameQuery = await productSchm.find({
         "name": productData.name
     });
@@ -115,9 +116,9 @@ router.post("/register-succesfully", async (req, res) => {
 
     // <=========== Password Validation before be saved on MongoDB ===========> //
     // Si la contraseña no cumple con los requisitos
-    if(userRegisterFetchedToDataBase.password.length <= 0) {
+    if (userRegisterFetchedToDataBase.password.length <= 0) {
         errorClient.push({text: "La contraseña no puede estar vacia!"});
-    } else if(userRegisterFetchedToDataBase.password.length < 8) {
+    } else if (userRegisterFetchedToDataBase.password.length < 8) {
         errorClient.push({text: "La contraseña debe de tener una longitud de 8 caracteres como minimo!"});
     };
 
@@ -129,16 +130,16 @@ router.post("/register-succesfully", async (req, res) => {
     const user_Name_Query_To_JSON = JSON.stringify(userNameQuery);
 
     // SI los datos ya existen en la base de datos, se deniega el registro
-    if(user_Register_Name_To_JSON === user_Name_Query_To_JSON) {
+    if (user_Register_Name_To_JSON === user_Name_Query_To_JSON) {
         errorClient.push({text: "El nombre ya esta en uso, elige otro nombre!"});
-    } else if(user_Register_Email_To_JSON === user_Email_Query_To_JSON) {
+    } else if (user_Register_Email_To_JSON === user_Email_Query_To_JSON) {
         errorClient.push({text: "El email ingresado ya esta en uso, usa otra cuenta de correo o inicia sesion si la cuenta es tuya"});
     };
 
     // Si la contraseña y la contraseña repetida no coinciden
-    if(userRegisterFetched.repeat_password !== userRegisterFetched.password) {
+    if (userRegisterFetched.repeat_password !== userRegisterFetched.password) {
         errorClient.push({text: "La contraseña repetida no coincide con la original, vuelve a intentarlo"});
-    } else if(userRegisterFetched.password !== userRegisterFetched.repeat_password) {
+    } else if (userRegisterFetched.password !== userRegisterFetched.repeat_password) {
         errorClient.push({text: "La contraseña original no coincide con al contraseña repetida, vuelve a intentarlo"});
     };
 
