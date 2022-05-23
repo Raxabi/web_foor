@@ -22,9 +22,6 @@ const product = new Schema({
     vendor: {
         type: String,
         required: true
-    },
-    image: {
-        type: Buffer,
     }
 },
     {

@@ -1,18 +1,22 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import passport from "passport";
+import multer from "multer";
 
 // Import Files
 import productSchm from "../models/productSchm";
 import usersSchm from "../models/usersSchm";
 
 const router = Router();
+const upload = multer({
+    dest: "data/images/"
+});
 
 // Ruta inicial
 
 router.get("/", (req, res) => {
     res.render("index");
-    console.log("Cookie:", req.cookies);
+    console.log("Cookies:", req.cookies);
     console.log("Signed Cookies:", req.signedCookies);
 });
 
@@ -57,13 +61,16 @@ router.get("/addproducts", (req, res) => {
 
 // save product
 
-router.post("/products/saveproducts", async (req, res) => {
+router.post("/products/saveproducts", upload.single("imagen"), async (req, res) => {
     const productData = productSchm(req.body);
-    
+
     let errorProducts = [];
 
     const productNameQuery = await productSchm.find({
         "name": productData.name
+    }, {
+        "_id": 0,
+        "name": 1
     });
 
     // Si el producto ya existe por nombre, se deniga el nuevo producto, por que ya existe
@@ -75,12 +82,23 @@ router.post("/products/saveproducts", async (req, res) => {
         errorProducts.push({text: "El producto no puede tener un valor menor a 0, esto podria ocasionar fallos en la base de datos"});
     }
 
+    const productQueryToVerify = JSON.stringify(productNameQuery);
+
+    console.log("req.body", productData.name, "y su tipo es", typeof productData.name);
+    console.log("consulta", productNameQuery, "y su tipo es", typeof productNameQuery.name);
+    console.log("consulta en formato JSON", productQueryToVerify, "y su tipo es", typeof productQueryToVerify);
+
+    // Si los datos estan vacios, se devolvera un error
+
     // Si hay errores se muetran esos errores por pantalla
-    if(errorProducts.length > 0) {
+    if (errorProducts.length > 0) {
         res.render("add-products", {errorProducts});
     } else {
         await productData.save();
-        res.redirect("/products");
+        console.log("new product saved:", productData.name);
+        setTimeout(_ => {
+            res.redirect("/products");
+        }, 1500);
     };
 });
 
@@ -94,25 +112,21 @@ router.post("/register-succesfully", async (req, res) => {
 
     // Consulta en la base de datos si un nombre existe
     const userNameQuery = await usersSchm.findOne(
-        {
-            "name": userRegisterFetched.name
-        },
-        {
-            "_id": 0,
-            "name": 1
-        }
-    );
+    {
+        "name": userRegisterFetched.name
+    }, {
+        "_id": 0,
+        "name": 1
+    });
     
     // Consulta en la base de datos si el email ya esta en uso
     const userEmailQuery = await usersSchm.findOne(
-        {
-            "email": userRegisterFetched.email
-        },
-        {
-            "_id": 0,
-            "email": 1
-        }
-    );
+    {
+        "email": userRegisterFetched.email
+    }, {
+        "_id": 0,
+        "email": 1
+    });
 
     // <=========== Password Validation before be saved on MongoDB ===========> //
     // Si la contraseña no cumple con los requisitos
@@ -124,6 +138,10 @@ router.post("/register-succesfully", async (req, res) => {
 
     // <=========== Data to JSON conversion ===========> //
     // Convertimos los datos del objeto req.body a json para que los datos puedan ser validados
+    /*
+        NOTA IMPORTANTE:
+        Este metodo es provisional, ya que posteriormente se validaRa directamente el valor del objeto
+    */
     const user_Register_Name_To_JSON = JSON.stringify(userRegisterFetched.name);
     const user_Register_Email_To_JSON = JSON.stringify(userRegisterFetched.email);
     const user_Email_Query_To_JSON = JSON.stringify(userEmailQuery);
