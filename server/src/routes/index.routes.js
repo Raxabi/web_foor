@@ -12,7 +12,7 @@ const upload = multer({
     dest: "data/images/"
 });
 
-// Ruta inicial
+// Initial route
 
 router.get("/", (req, res) => {
     res.render("index");
@@ -28,9 +28,11 @@ router.get("/register", (req, res) => {
     res.render("login-register");
 });
 
-// login
+// login, render a page to sing in / log in with google
 
 router.get("/login/federated/google", passport.authenticate('google'));
+
+// services pages, render a page
 
 router.get("/services", (req, res) => {
     res.render("services");
@@ -45,7 +47,7 @@ router.get("/products", async (req, res) => {
     res.render("index-products", { productsToDisplay });
 });
 
-// each product
+// each product, render a page per each product
 
 router.get("/products/:name", async (req, res) => {
     const name = await productSchm.find({
@@ -53,40 +55,40 @@ router.get("/products/:name", async (req, res) => {
     });
 });
 
-// add a product, get type
+// add a product, render a page
 
 router.get("/addproducts", (req, res) => {
     res.render("add-products");
 });
 
-// save product
+// save product, save data
 
 router.post("/products/saveproducts", upload.single("imagen"), async (req, res) => {
     const productData = productSchm(req.body);
 
     let errorProducts = [];
 
-    const productNameQuery = await productSchm.find({
+    let productNameQuery = await productSchm.find({
         "name": productData.name
     }, {
         "_id": 0,
         "name": 1
     });
 
+    productNameQuery.map(key => {
+        productNameQuery = key;
+    });
+    
     // Si el producto ya existe por nombre, se deniga el nuevo producto, por que ya existe
-    if (productData.name === productNameQuery) {
-        errorProducts.push({text: `El producto ya existe por que el nombre es el mismo que: ${productData.name}`})
+    if (productData.name === productNameQuery.name) {
+        errorProducts.push({text: `El producto ya existe por que el nombre es el mismo que el del producto: ${productData.name}`});
+        console.log("El producto ya existe");
     };
 
     if (productData.price < 0) {
         errorProducts.push({text: "El producto no puede tener un valor menor a 0, esto podria ocasionar fallos en la base de datos"});
-    }
-
-    const productQueryToVerify = JSON.stringify(productNameQuery);
-
-    console.log("req.body", productData.name, "y su tipo es", typeof productData.name);
-    console.log("consulta", productNameQuery, "y su tipo es", typeof productNameQuery.name);
-    console.log("consulta en formato JSON", productQueryToVerify, "y su tipo es", typeof productQueryToVerify);
+        console.log("La cantidad del precio no puede estar or debajo de 0");
+    };
 
     // Si los datos estan vacios, se devolvera un error
 
