@@ -75,10 +75,18 @@ router.post("/products/saveproducts", upload.single("imagen"), async (req, res) 
         "name": 1
     });
 
+    // Recorremos el array que contiene el objeto de la consulta buscando el nombre
+    // ese nombre sera el parametro key, por lo que igualaremos el nombre al parametro
+    // para que tenga su valor
     productNameQuery.map(key => {
         productNameQuery = key;
     });
     
+    Object.keys(productData).map(() => {
+        productData.URLName.replace(/ /g,'');
+        console.log(productData.URLName);
+    });
+
     // Si el producto ya existe por nombre, se deniga el nuevo producto, por que ya existe
     if (productData.name === productNameQuery.name) {
         errorProducts.push({text: `El producto ya existe por que el nombre es el mismo que el del producto: ${productData.name}`});
@@ -109,7 +117,7 @@ router.post("/products/saveproducts", upload.single("imagen"), async (req, res) 
 router.post("/register-succesfully", async (req, res) => {
     const userRegisterFetchedToDataBase = usersSchm(req.body); // its dont parse the "repeat password" field to database
     const userRegisterFetched = req.body // its dont parse the "repeat password" but its used as a comparation with the first password field
-    
+
     let errorClient = [];
 
     // Consulta en la base de datos si un nombre existe
@@ -166,7 +174,7 @@ router.post("/register-succesfully", async (req, res) => {
     const hashedPassword = bcrypt.hashSync(userRegisterFetchedToDataBase.password, 777);
 
     // Cambiamos el valor de la propiedad password en el objeto req.body
-    Object.keys(userRegisterFetchedToDataBase).map(keys => {
+    Object.keys(userRegisterFetchedToDataBase).map(() => {
         userRegisterFetchedToDataBase.password = hashedPassword
     });
 

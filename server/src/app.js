@@ -16,10 +16,10 @@ import router from "./routes/index.routes";
 const logger = winston.createLogger({
     level: "info",
     format: winston.format.json(),
-    defaultMeta: { service : "user-service" },
+    defaultMeta: { service: "user-service" },
     transports: [
-        new winston.transports.File({ filename: "error.log", level: "error"}),
-        new winston.transports.File({ filename: "combined.log" })
+        new winston.transports.File({ filename: "data/logs/errorLogs/error.log", level: "error" }),
+        new winston.transports.File({ filename: "data/logs/fullLogs/combined.log" })
     ],
 });
 

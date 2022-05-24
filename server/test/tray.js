@@ -9,16 +9,11 @@ Object.keys(objeto).map(value => {
     console.log("Console.log despues de la conversion (", value, ":", objeto[value], ")");
 }); */
 
-let array = [
-    {
-        "name": "i5 9700",
-        "name": "i5 9700"
-    }
-]
+let array = {
+    "name": "i5 9700",
+}
 
-const errorExist = new Error("El produto ya existe");
-
-console.log(errorExist);
+console.log(array.name.replace(/ /g,''))
 
 /* array.forEach(key => {
     console.log(key)

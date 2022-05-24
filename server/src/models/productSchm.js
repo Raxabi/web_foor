@@ -6,6 +6,12 @@ const product = new Schema({
         required: true,
         maxlength: 35
     },
+    URLName: {
+        type: String,
+        required: true,
+        maxlength: 10,
+        trim: true
+    },
     description: {
         type: String,
         required: true
