@@ -49,10 +49,19 @@ router.get("/products", async (req, res) => {
 
 // each product, render a page per each product
 
+/*
+    NOTA IMPORTANTE DE RECORDATORIO osbre la siguiente ruta (empezando en lai linea 60 y acabando en la 65)
+    
+    la ruta dinamica :name hace referencia a una variable del mismo nombre
+    por lo que creamos dicha variable (constante en este caso)
+    que haga una consulta a la base de datos
+    donde el valor del campo URLName sea la peticion que realizado el cliente (req.params.name)
+*/
 router.get("/products/:name", async (req, res) => {
     const name = await productSchm.find({
-        "name": req.params.name
+        "URLName": req.params.name
     });
+    res.render("product", { name });
 });
 
 // add a product, render a page
@@ -63,8 +72,10 @@ router.get("/addproducts", (req, res) => {
 
 // save product, save data
 
-router.post("/products/saveproducts", upload.single("imagen"), async (req, res) => {
+router.post("/products/saveproducts", upload.single("image"), async (req, res) => {
     const productData = productSchm(req.body);
+
+    console.log(productData.image)
 
     let errorProducts = [];
 
@@ -83,8 +94,7 @@ router.post("/products/saveproducts", upload.single("imagen"), async (req, res) 
     });
     
     Object.keys(productData).map(() => {
-        productData.URLName.replace(/ /g,'');
-        console.log(productData.URLName);
+        productData.URLName = productData.URLName.replace(/ /g,'');
     });
 
     // Si el producto ya existe por nombre, se deniga el nuevo producto, por que ya existe

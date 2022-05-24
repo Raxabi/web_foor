@@ -1,0 +1,15 @@
+<%- include ("../partials/main-header") -%>
+<title>
+    Electro Chollo |
+<% name.forEach(function(name) { %>
+    <%= name.name %>
+<%})%>
+</title>
+
+<div id="main-product">
+    <% name.forEach(function(data) { %>
+        <h1><%= data.name %></h1>
+    <%})%>
+</div>
+
+<%- include ("../partials/main-footer") -%>
