@@ -15,7 +15,7 @@
                 <p class="card-text">
                     Fabricado por: <%= product.vendor %>
                 </p>
-                <a href="/" class="btn btn-primary" role="button">Comprar por <%= product.price %>€</a>
+                <a href="/products/<%= product.URLName %>" rel="noreferrer nofollow noopener" class="btn btn-primary" role="button">Comprar por <%= product.price %>€</a>
             </div>
         </div>
     <%})%>

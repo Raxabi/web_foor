@@ -1,0 +1,3 @@
+Fix new bug in save product post route the req.body only show _id property --FIXED
+// The problem was in the lines that contains multer configs are commented affect to the addproduct form
+// for the enctype Attribute

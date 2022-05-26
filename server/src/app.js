@@ -1,11 +1,11 @@
 // Modules import
-import express from "express";
-import { urlencoded } from "express";
+import express, { urlencoded } from "express";
 import path from "path";
 import passport from "passport";
 import GoogleStrategy from "passport-google-oidc";
 import winston from "winston"
 import "dotenv/config";
+import helmet from "helmet";
 
 // Import Config Files
 import "./connection/connection";
@@ -31,11 +31,14 @@ if (process.env.NODE_ENV !== "production") {
 
 const app = express();
 
-// Configuracion de express (archivos estaticos, etc...)
+// Configuracion de express (archivos estaticos, etc...) / Middlewares
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(urlencoded({ extended: true }));
 app.use(router);
+app.use(helmet.referrerPolicy({
+    policy: "no-referrer",
+}));
 
 // Configuracion del gestor de plantillas
 app.set("view engine", "ejs");

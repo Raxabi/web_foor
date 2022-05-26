@@ -1,0 +1,35 @@
+<%- include ("../partials/main-header") -%>
+<title>
+    Electro Chollo |
+<% name.forEach(function(name) { %>
+    <%= name.name %>
+<%})%>
+</title>
+
+<div id="main-product">
+    <% name.forEach(function(data) { %>
+        <h2 class="ms-5 mt-5 p-3" id="productName"><%= data.name %></h2>
+        <div id="additional-container" class="p-3 px-5 me-5 ms-auto d-flex justify-content-end border border-3 border-dark">
+            Envio en menos de 72 horas
+        </div>
+        <!-- <div id="main-info-product" class="p-5 ms-auto me-5 d-flex justify-content-end border border-3 border-dark"> -->
+        <!-- </div> -->
+        <hr class="border-primary border-5">
+        <h3 class="mt-5 ms-5 mb-3">Reseñas de otros usuarios</h3>
+        <div id="comment-border">
+            <!-- Dentro del borde de reseñas esta este div -->
+            <div class="my-4 mx-4">
+                <h5 class="mx-4">Listar los comentarios por:</h5>
+                <input list="sort-methods" name="sort">
+                <datalist id="sort-methods">
+                    <option value="Más recientes primero">
+                    <option value="Más antiguos primero">
+                    <option value="Mejores valoraciones">
+                    <option value="Peores valoraciones">
+                </datalist>
+            </div>
+        </div>
+    <%})%>
+</div>
+
+<%- include ("../partials/main-footer") -%>

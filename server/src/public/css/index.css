@@ -26,3 +26,13 @@
 .navbar-items:hover {
     font-weight: bolder;
 }
+
+/* underline per produdct (Deprecated, not in use) */
+
+#additional-container {
+    width: fit-content;
+}
+
+#main-info-product {
+    width: fit-content;
+}

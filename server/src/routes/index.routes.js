@@ -1,21 +1,22 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import passport from "passport";
-import multer from "multer";
+//import multer from "multer";
 
 // Import Files
 import productSchm from "../models/productSchm";
 import usersSchm from "../models/usersSchm";
 
 const router = Router();
-const upload = multer({
+/* const upload = multer({
     dest: "data/images/"
-});
+}); */
 
 // Initial route
 
 router.get("/", (req, res) => {
     res.render("index");
+    console.log(req.headers);
     console.log("Cookies:", req.cookies);
     console.log("Signed Cookies:", req.signedCookies);
 });
@@ -35,7 +36,7 @@ router.get("/login/federated/google", passport.authenticate('google'));
 // services pages, render a page
 
 router.get("/services", (req, res) => {
-    res.render("services");
+    res.render("index_Services");
 });
 
 // <=========== Products ===========> //
@@ -44,7 +45,7 @@ router.get("/services", (req, res) => {
 
 router.get("/products", async (req, res) => {
     const productsToDisplay = await productSchm.find({});
-    res.render("index-products", { productsToDisplay });
+    res.render("index_products", { productsToDisplay });
 });
 
 // each product, render a page per each product
@@ -61,29 +62,41 @@ router.get("/products/:name", async (req, res) => {
     const name = await productSchm.find({
         "URLName": req.params.name
     });
-    res.render("product", { name });
+    res.render("single_Product", { name });
 });
 
 // add a product, render a page
 
 router.get("/addproducts", (req, res) => {
-    res.render("add-products");
+    res.render("add_Products");
+});
+
+router.get("/user/:user", async (req, res) => {
+    const user = await usersSchm.find({
+        "_id": req.params.user
+    });
+    res.render("user_Page");
 });
 
 // save product, save data
 
-router.post("/products/saveproducts", upload.single("image"), async (req, res) => {
+router.post("/products/saveproducts", /*upload.single("image"),*/ async (req, res) => {
     const productData = productSchm(req.body);
-
-    console.log(productData.image)
 
     let errorProducts = [];
 
-    let productNameQuery = await productSchm.find({
+    const productNameQuery = await productSchm.find({
         "name": productData.name
     }, {
         "_id": 0,
         "name": 1
+    });
+
+    const productURLQuery = await productSchm.find({
+        "URLName": productData.URLName
+    }, {
+        "_id": 0,
+        "URLName": 1
     });
 
     // Recorremos el array que contiene el objeto de la consulta buscando el nombre
@@ -93,8 +106,13 @@ router.post("/products/saveproducts", upload.single("image"), async (req, res) =
         productNameQuery = key;
     });
     
+    // Primeramente convertiremos el valor del la llave URLName a letras minusculas
+    // para que la url sea mas homogenea.
+    // Luego reemplazaremos los espacios vacios por una barrabaja para que la url sea mas tipeable
+    // y el navegador no la interprete como otra dirección
     Object.keys(productData).map(() => {
-        productData.URLName = productData.URLName.replace(/ /g,'');
+        productData.URLName = productData.URLName.toLowerCase();
+        productData.URLName = productData.URLName.replace(/ /g,'_');
     });
 
     // Si el producto ya existe por nombre, se deniga el nuevo producto, por que ya existe
@@ -112,7 +130,7 @@ router.post("/products/saveproducts", upload.single("image"), async (req, res) =
 
     // Si hay errores se muetran esos errores por pantalla
     if (errorProducts.length > 0) {
-        res.render("add-products", {errorProducts});
+        res.render("add_Products", {errorProducts, productURLQuery});
     } else {
         await productData.save();
         console.log("new product saved:", productData.name);
@@ -124,7 +142,7 @@ router.post("/products/saveproducts", upload.single("image"), async (req, res) =
 
 // <=========== User Register ===========> //
 
-router.post("/register-succesfully", async (req, res) => {
+router.post("/register", async (req, res) => {
     const userRegisterFetchedToDataBase = usersSchm(req.body); // its dont parse the "repeat password" field to database
     const userRegisterFetched = req.body // its dont parse the "repeat password" but its used as a comparation with the first password field
 
@@ -190,7 +208,7 @@ router.post("/register-succesfully", async (req, res) => {
 
     // Si existen errores en el array se devuelven estos errores
     if(errorClient.length > 0) {
-        res.render("login-register", { errorClient });
+        res.render("register", { errorClient });
     } else {
         await userRegisterFetchedToDataBase.save();
         console.log("New user Saved");
