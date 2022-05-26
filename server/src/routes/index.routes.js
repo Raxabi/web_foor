@@ -128,7 +128,11 @@ router.post("/products/saveproducts", /*upload.single("image"),*/ async (req, re
 
     // Si los datos estan vacios, se devolvera un error
 
-    // Si hay errores se muetran esos errores por pantalla
+    if (!productData) {
+        errorProducts.push({text: "Los campos no pueden estar vacios, ¡Debe de existir un producto!"})
+    }
+
+    // Si hay errores se muestran esos errores por pantalla
     if (errorProducts.length > 0) {
         res.render("add_Products", {errorProducts, productURLQuery});
     } else {
@@ -143,8 +147,8 @@ router.post("/products/saveproducts", /*upload.single("image"),*/ async (req, re
 // <=========== User Register ===========> //
 
 router.post("/register", async (req, res) => {
-    const userRegisterFetchedToDataBase = usersSchm(req.body); // its dont parse the "repeat password" field to database
-    const userRegisterFetched = req.body // its dont parse the "repeat password" but its used as a comparation with the first password field
+    const userRegisterFetchedToDataBase = usersSchm(req.body);
+    const userRegisterFetched = req.body;
 
     let errorClient = [];
 

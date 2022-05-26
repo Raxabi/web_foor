@@ -1,3 +1,7 @@
-Fix new bug in save product post route the req.body only show _id property --FIXED
-// The problem was in the lines that contains multer configs are commented affect to the addproduct form
-// for the enctype Attribute
+Arreglar nuevo bug en la ruta post de guardado de productos que solo muestra la pripiedad _id --FIXED
+// El problema ha sido resuelto debido a que al eliminar multer temporalmente no se modifico el formulario
+// y no se elimino la propiedad enctype, la cual tenia un valor no adecuado para el envio de simplemente texto plano
+
+Eliminar la constante userRegisterFetched sin el esquema, se usara mas adelante la contiene el esquema como
+parametro aceptando el req.body
+
