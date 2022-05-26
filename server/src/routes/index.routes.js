@@ -229,11 +229,9 @@ router.post("/login-succesfully", async (req, res) => {
     const userID = await usersSchm.findOne(
         {
             "name": userLoginData.name
-        },
-        {
+        }, {
             "_id": 1
-        }
-    );
+        });
 
     // validamos por el nombre, contraseña y email
     const userAlreadyRegisteredData = await usersSchm.findOne(
