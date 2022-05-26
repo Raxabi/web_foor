@@ -9,11 +9,12 @@ Object.keys(objeto).map(value => {
     console.log("Console.log despues de la conversion (", value, ":", objeto[value], ")");
 }); */
 
-let array = {
-    "name": "i5 9700",
-}
+let array = [{
+        "name": "i5 9700",
+    }
+];
 
-console.log(array.name.replace(/ /g,''))
+console.log(array.flat())
 
 /* array.forEach(key => {
     console.log(key)
