@@ -6,6 +6,7 @@ import GoogleStrategy from "passport-google-oidc";
 import winston from "winston"
 import "dotenv/config";
 import helmet from "helmet";
+import morgan from "morgan";
 
 // Import Config Files
 import "./connection/connection";
@@ -36,6 +37,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.use(urlencoded({ extended: true }));
 app.use(router);
+app.use(morgan("dev"));
 app.use(helmet.referrerPolicy({
     policy: "no-referrer",
 }));
