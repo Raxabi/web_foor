@@ -58,19 +58,19 @@ export default router;
     ESTA SECCION DE COMENTARIOS SE RECOMIENDA SER IGNORADA, YA QUE POR AHORA NO APORTA NADA
     ANTIGUAS RUTAS O RUTAS QUE SERA USADAS MAS ADELANTE
 
-// Pagina de registo
-router.get("/register", renderRegister);
+    // Pagina de registo
+    router.get("/register", renderRegister);
 
-// User Register
-router.post("/register", register);
+    // User Register
+    router.post("/register", register);
 
-// Pagina de inicio de sesion
-router.get("/login", renderLogin)
+    // Pagina de inicio de sesion
+    router.get("/login", renderLogin)
 
-// Inicio de sesion local
-router.post("/login-succesfully", login);
+    // Inicio de sesion local
+    router.post("/login-succesfully", login);
 
-// Página por cada usuario
-router.get("/user/:user", renderEachUser);
+    // Página por cada usuario
+    router.get("/user/:user", renderEachUser);
 
 */

@@ -15,11 +15,7 @@ let array = {
 
 //console.log(array.flat())
 
-console.log(Object.values(array), typeof(array));
 
-if (!Object.values(array)) {
-    console.log("No hay valores");
-};
 
 /* array.forEach(key => {
     console.log(key)
