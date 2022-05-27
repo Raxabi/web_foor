@@ -1,3 +1,3 @@
-function arePermitted() {
+export function arePermitted() {
     
 }

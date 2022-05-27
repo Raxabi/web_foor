@@ -1,6 +1,6 @@
 import usersSchm from "../models/usersSchm";
 
-/* <=========== Get Method Routes ===========> */
+/* <=========== Rutas Get ===========> */
 
 export const renderRegister = (req, res) => {
     res.render("login-register");
@@ -13,9 +13,9 @@ export const renderEachUser = async (req, res) => {
     res.render("user_Page");
 }
 
-/* <=========== Post Methods Routes ===========> */
+/* <=========== Rutas Post ===========> */
 
-/* <======= User Register =======> */
+/* User Register */
 
 export const register = async (req, res) => {
     const userRegisterFetchedToDataBase = usersSchm(req.body);
@@ -93,7 +93,7 @@ export const register = async (req, res) => {
     };
 };
 
-/* <=========== User Login ===========> */
+/* User Login */
 
 export const login = async (req, res) => {
     const userLoginData = req.body;

@@ -23,7 +23,7 @@ export const renderProducts = async (req, res) => {
 
 /* <=========== Rutas Post ===========> */
 
-/* <======= Nuevo producto =======> */
+/*  Nuevo producto  */
 
 export const newProduct = async (req, res) => {
     const productData = productSchm(req.body);
