@@ -46,7 +46,7 @@ app.use(arePermitted);
 // Configuracion de inicio de sesion con Google
 /* passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIEND_ID,
-    clientSecret: process.env.GOGOLE_SECURE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_SECURE_CLIENT_ID,
     callbackURL: "http://www.example.com/auth/google/callback"
 }, function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ googleid: profile.id }, function(err, user) {

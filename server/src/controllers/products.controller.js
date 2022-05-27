@@ -14,12 +14,12 @@ export const renderEachProduct = async (req, res) => {
 
 export const renderNewProduct = (req, res) => {
     res.render("add_Products");
-}
+};
 
 export const renderProducts = async (req, res) => {
     const productsToDisplay = await productSchm.find({});
     res.render("index_products", { productsToDisplay });
-}
+};
 
 /* <=========== Rutas Post ===========> */
 
@@ -73,7 +73,7 @@ export const newProduct = async (req, res) => {
 
     if (!productData) {
         errorProducts.push({text: "Los campos no pueden estar vacios, ¡Debe de existir un producto!"})
-    }
+    };
 
     // Si hay errores se muestran esos errores por pantalla
     if (errorProducts.length > 0) {
@@ -85,4 +85,4 @@ export const newProduct = async (req, res) => {
             res.redirect("/products");
         }, 1500);
     };
-}
+};

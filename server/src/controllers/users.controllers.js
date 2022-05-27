@@ -1,10 +1,15 @@
 import usersSchm from "../models/usersSchm";
+import passport from "passport";
 
 /* <=========== Rutas Get ===========> */
 
 export const renderRegister = (req, res) => {
     res.render("login-register");
 };
+
+export const renderGoogleRegister = (req,res) => {
+    passport
+}
 
 export const renderEachUser = async (req, res) => {
     const user = await usersSchm.find({
