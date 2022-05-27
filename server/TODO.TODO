@@ -8,3 +8,7 @@ parametro aceptando el req.body
 Terminar de agregar inicio de sesion con google
 
 Completar REST API PayPal con sus controladores
+
+Terminar de completar algunas validaciones antes de guardar un producto
+
+Poner de forma aleatoria productos existentes en la pagina principal

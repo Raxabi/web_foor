@@ -1,5 +1,4 @@
 import productSchm from "../models/productSchm";
-import bcrypt from "bcrypt";
 
 /* <=========== Rutas Get ===========> */
 
@@ -55,7 +54,7 @@ export const newProduct = async (req, res) => {
     // queden reemplazados por una barrabaja en su lugar
     Object.keys(productData).map(() => {
         productData.URLName = productData.URLName.toLowerCase();
-        productData.URLName = productData.URLName.replace(/ /g,'_');
+        productData.URLName = productData.URLName.replace(/ /g,'-');
     });
 
     // Si el producto ya existe por nombre, se deniga el nuevo producto, por que ya existe
@@ -67,12 +66,6 @@ export const newProduct = async (req, res) => {
     // Si el precio del producto es menor de 0 se deniega la creacion del producto, en ocasiones puede que los productos esten a 0 por algun 
     if (productData.price < 0) {
         errorProducts.push({text: "El producto no puede tener un valor menor a 0, esto podria ocasionar fallos en la base de datos"});
-    };
-
-    // Si los datos estan vacios, se devolvera un error
-
-    if (!productData) {
-        errorProducts.push({text: "Los campos no pueden estar vacios, ¡Debe de existir un producto!"})
     };
 
     // Si hay errores se muestran esos errores por pantalla
