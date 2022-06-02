@@ -85,5 +85,5 @@ export const newProduct = async (req, res) => {
 };
 
 export const editProducto = (req, res) => {
-    
+    //!PASS unused btw
 };

@@ -2,19 +2,22 @@ import { Router } from "express";
 import passport from "passport";
 import multer from "multer";
 
+const storage = multer.diskStorage({
+    destination: "src/public/images/",
+    filename: function(req, file, callback) {
+        file.originalname = file.originalname.toLowerCase();
+        file.originalname = file.originalname.replace(/ /g,("-"));
+        callback(null, file.originalname + "-" + Date.now() + ".jpg");
+    }
+});
+
+const upload = multer({ storage: storage });
+
 // Import controllers
 //import { register, login, renderRegister, renderEachUser } from "../controllers/users.controllers";
 import { newProduct, renderEachProduct, renderNewProduct, renderProducts } from "../controllers/products.controller";
 
 const router = Router();
-const storage = multer.diskStorage({
-    destination: "data/images",
-    filename: function(req, file, callback) {
-        callback(null, file.fieldname + "-" + Date.now() + ".jpg");
-    }
-});
-
-const upload = multer({ storage: storage })
 
 // ruta inicial o ruta Raiz / Root
 
@@ -60,22 +63,22 @@ export default router;
 
 /*
     ! Seccion deprecada y sin uso por el momento
-    ESTA SECCION DE COMENTARIOS SE RECOMIENDA SER IGNORADA, YA QUE POR AHORA NO APORTA NADA
-    ANTIGUAS RUTAS O RUTAS QUE SERA USADAS MAS ADELANTE
+    * ESTA SECCION DE COMENTARIOS SE RECOMIENDA SER IGNORADA, YA QUE POR AHORA NO APORTA NADA, SON
+    * ANTIGUAS RUTAS QUE SERAN USADAS MAS ADELANTE
 
-    // Pagina de registo
+    ! Pagina de registo
     router.get("/register", renderRegister);
 
-    // User Register
+    ! User Register
     router.post("/register", register);
 
-    // Pagina de inicio de sesion
+    ! Pagina de inicio de sesion
     router.get("/login", renderLogin)
 
-    // Inicio de sesion local
+    ! Inicio de sesion local
     router.post("/login-succesfully", login);
 
-    // Página por cada usuario
+    ! Página por cada usuario
     router.get("/user/:user", renderEachUser);
 
 */
