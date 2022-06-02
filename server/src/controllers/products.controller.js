@@ -78,7 +78,7 @@ export const newProduct = async (req, res) => {
     } else {
         await productData.save();
         console.log("new product saved:", productData.name);
-        setTimeout(_ => {
+        setTimeout(() => {
             res.redirect("/products");
         }, 1500);
     };

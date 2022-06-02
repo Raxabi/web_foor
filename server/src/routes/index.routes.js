@@ -7,9 +7,14 @@ import multer from "multer";
 import { newProduct, renderEachProduct, renderNewProduct, renderProducts } from "../controllers/products.controller";
 
 const router = Router();
-const upload = multer({
-    dest: "data/images/"
+const storage = multer.diskStorage({
+    destination: "data/images",
+    filename: function(req, file, callback) {
+        callback(null, file.fieldname + "-" + Date.now() + ".jpg");
+    }
 });
+
+const upload = multer({ storage: storage })
 
 // ruta inicial o ruta Raiz / Root
 
@@ -49,7 +54,7 @@ router.get("/products/:name", renderEachProduct);
 router.get("/addproducts", renderNewProduct);
 
 // * Ruta para guardar un nuevo producto
-router.post("/products/saveproducts", newProduct);
+router.post("/products/saveproducts", upload.single("image"), newProduct);
 
 export default router;
 
