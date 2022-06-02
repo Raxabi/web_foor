@@ -4,6 +4,7 @@ const user = new Schema({
     name: {
         type: String,
         required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -16,7 +17,7 @@ const user = new Schema({
         type: String,
         trim: true,
         required: true,
-        //unique: true
+        unique: true
     },
     date: {
         type: String,

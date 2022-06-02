@@ -28,12 +28,11 @@ const product = new Schema({
     avaible: {
         type: Number,
         required: true
-        // * Importante para saber cuanto productos se pueden llegar a vender
     },
     vendor: {
         type: String,
         required: true
-    },
+    }
 },
     {
         timestamps: true,

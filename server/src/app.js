@@ -41,6 +41,7 @@ app.use(morgan("dev"));
 app.use(helmet.referrerPolicy({
     policy: "no-referrer",
 }));
+app.use(["src/public/images/"], express.static(path.join(__dirname, "public/images")));
 app.use(arePermitted);
 
 // Configuracion de inicio de sesion con Google
@@ -70,7 +71,6 @@ app.use(arePermitted);
  * TODO: Eliminar la conversion de objeto a JSON para comparar los datos
  * TODO: del nuevo usuario con el metodo JSON.stringify en los controladores
  */
-
 
 // Configuracion del gestor de plantillas
 app.set("view engine", "ejs");

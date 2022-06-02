@@ -22,3 +22,17 @@ let array = {
 }) */
 
 //console.log(array)
+
+class Persona {
+    constructor(name) {
+        this.name = name
+    };
+
+    saludar() {
+        console.log(this.name, "dice Hola!")
+    };
+};
+
+const pedro = new Persona("Pedro");
+
+console.log(pedro.saludar());
