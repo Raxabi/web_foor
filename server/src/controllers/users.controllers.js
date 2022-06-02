@@ -56,10 +56,11 @@ export const register = async (req, res) => {
 
     // <=========== Data to JSON conversion ===========> //
     // Convertimos los datos del objeto req.body a json para que los datos puedan ser validados
-    /*
-        NOTA IMPORTANTE:
-        Este metodo es provisional, ya que posteriormente se validaRa directamente el valor del objeto
-    */
+    
+    /**
+     * TODO: Eliminar la conversion de objeto a JSON para la comparacion y hacerlo iterando directamente
+     * TODO: el objeto entrante, (esto hace mas limpio el codigo)
+     */
     const user_Register_Name_To_JSON = JSON.stringify(userRegisterFetched.name);
     const user_Register_Email_To_JSON = JSON.stringify(userRegisterFetched.email);
     const user_Email_Query_To_JSON = JSON.stringify(userEmailQuery);

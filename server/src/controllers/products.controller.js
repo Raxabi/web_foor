@@ -63,8 +63,12 @@ export const newProduct = async (req, res) => {
         console.log("El producto ya existe");
     };
 
-    // Si el precio del producto es menor de 0 se deniega la creacion del producto, en ocasiones puede que los productos esten a 0 por algun 
-    if (productData.price < 0) {
+    /**
+     * * El precio del producto a veces puede ser 0 pero por defecto se denegara la creacion
+     * * del producto para evitar posibles problemas
+     * ! Esta regla podra ser modificada si se necesita crear algun producto con valor 0
+     */
+    if (productData.price <= 0) {
         errorProducts.push({text: "El producto no puede tener un valor menor a 0, esto podria ocasionar fallos en la base de datos"});
     };
 
@@ -78,4 +82,8 @@ export const newProduct = async (req, res) => {
             res.redirect("/products");
         }, 1500);
     };
+};
+
+export const editProducto = (req, res) => {
+    
 };

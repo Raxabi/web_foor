@@ -54,6 +54,23 @@ app.use(arePermitted);
     });
 })); */
 
+//! Tareas pendentes hasta el momento
+/**
+ * TODO: Eliminar la constante userRegisterFetched sin el esquema, se usara mas adelante la contiene el esquema como
+ * TODO: parametro aceptando el req.body
+
+ * TODO: Terminar de agregar inicio de sesion con google
+
+ * TODO: Completar REST API PayPal con sus controladores
+
+ * TODO: Terminar de completar algunas validaciones antes de guardar un producto
+
+ * TODO: Poner de forma aleatoria productos existentes en la pagina principal
+
+ * TODO: Eliminar la conversion de objeto a JSON para comparar los datos
+ * TODO: del nuevo usuario con el metodo JSON.stringify en los controladores
+ */
+
 
 // Configuracion del gestor de plantillas
 app.set("view engine", "ejs");
