@@ -1,16 +1,14 @@
-import mongoose from "mongoose";
+import { connect } from "mongoose";
 
-const forraje_host = process.env.FORRAJE_HOST
-const forraje_database = process.env.FORRAJE_DATABASE
-const mongo_URI = `mongodb://${forraje_host}/${forraje_database}`;
-
-async function mongoConnection() {
-    await mongoose.connect(mongo_URI);
+async function mongoConnection(host, database) {
+    await connect(`mongodb://${host}/${database}`);
     console.log("Connected to database");
-}
+};
 
 try {
-    mongoConnection();
+    mongoConnection(process.env.FORRAJE_HOST, process.env.FORRAJE_DATABASE);
 } catch (error) {
-    console.log("Something was bad attemping connectto database :( \n:", error);
-}
+    console.log(
+        "Something was bad attemping connect to database :( \nFor more information lookup the error: \n" , error
+    );
+};
