@@ -8,7 +8,6 @@ import "dotenv/config";
 import helmet from "helmet";
 import morgan from "morgan";
 import { arePermitted } from "./middlewares/authorization"
-import Resize from "./middlewares/resize";
 
 // Import Config Files
 import "./connection/connection";

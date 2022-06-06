@@ -14,5 +14,3 @@ try {
         "Something was bad attemping connect to database :( \nFor more information lookup the error: \n" , error
     );
 };
-
-new Promise
