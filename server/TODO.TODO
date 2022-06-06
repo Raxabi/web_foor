@@ -12,3 +12,12 @@ Completar REST API PayPal con sus controladores
 Terminar de completar algunas validaciones antes de guardar un producto
 
 Poner de forma aleatoria productos existentes en la pagina principal
+
+Añadir al esquema de usuarios:
+
+roles: [
+    {
+        type: Schema.Types.ObjectId,
+        ref: "Role"
+    }
+]
