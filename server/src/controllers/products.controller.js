@@ -1,4 +1,5 @@
 import productSchm from "../models/productSchm";
+import userSchema from "../controllers/users.controllers";
 
 /* <=========== Rutas Get ===========> */
 
@@ -11,8 +12,14 @@ export const renderEachProduct = async (req, res) => {
     res.render("single_Product", { name });
 };
 
-export const renderNewProduct = (req, res) => {
+export const renderNewProduct = async (req, res) => {
     res.render("add_Products");
+    const userPrivilegies = await user.findOne({
+        "name": "PASS"
+    }, {
+        "_id": 0,
+        "rol": "PASS"
+    });
 };
 
 export const renderProducts = async (req, res) => {
