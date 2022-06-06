@@ -16,7 +16,8 @@ export const renderPayPalPayment = (req, res) => {
 };
 
 /**
- * * This function render the page of the canceled payment when a payment is canceled before the pay  
+ * * This function render the page of the canceled payment when a payment is canceled before the pay
+ * * If the payment is cancelled there arent money involved
  */
 
 export const renderPayPalCancelPayment = (req, res) => {
