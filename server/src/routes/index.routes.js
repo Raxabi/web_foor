@@ -5,8 +5,7 @@ import multer from "multer";
 const storage = multer.diskStorage({
     destination: "src/public/images/",
     filename: function(req, file, callback) {
-        file.originalname = file.originalname.toLowerCase();
-        file.originalname = file.originalname.replace(/ /g,("-"));
+        file.originalname = file.originalname.toLowerCase() && file.originalname.replace(/ /g,("-"));
         callback(null, file.originalname + "-" + Date.now() + ".jpg");
     }
 });
