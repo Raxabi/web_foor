@@ -36,6 +36,9 @@ const user = new Schema({
         uppercase: true,
         required: true
     },
+    rol: {
+        
+    },
     userPhoneNumber: {
         type: String,
         required: true,

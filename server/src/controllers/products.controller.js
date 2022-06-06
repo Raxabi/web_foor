@@ -53,14 +53,13 @@ export const newProduct = async (req, res) => {
     // Convertimos el valor de URLName a minusculas y seguidamente volvemos a cambiar el valor del URLName haciendo que los huecos en blanco
     // queden reemplazados por una barrabaja en su lugar
     Object.keys(productData).map(() => {
-        productData.URLName = productData.URLName.toLowerCase();
-        productData.URLName = productData.URLName.replace(/ /g,'-');
+        productData.URLName = productData.URLName.toLowerCase() && productData.URLName.replace(/ /g,'-');
+        
     });
 
     // Si el producto ya existe por nombre, se deniga el nuevo producto, por que ya existe
     if (productData.name === productNameQuery.name) {
         errorProducts.push({text: `El producto ya existe por que el nombre es el mismo que el del producto: <a href="">${productData.name}</a>`});
-        console.log("El producto ya existe");
     };
 
     /**

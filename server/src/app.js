@@ -41,7 +41,6 @@ app.use(morgan("dev"));
 app.use(helmet.referrerPolicy({
     policy: "no-referrer",
 }));
-app.use(["src/public/images/"], express.static(path.join(__dirname, "public/images")));
 app.use(arePermitted);
 
 // Configuracion de inicio de sesion con Google

@@ -9,14 +9,14 @@ export const renderRegister = (req, res) => {
 
 export const renderGoogleRegister = (req,res) => {
     passport
-}
+};
 
 export const renderEachUser = async (req, res) => {
     const user = await usersSchm.find({
         "_id": req.params.user
     });
     res.render("user_Page");
-}
+};
 
 /* <=========== Rutas Post ===========> */
 
@@ -145,4 +145,3 @@ export const login = async (req, res) => {
         }, 1777);
     };
 };
-
