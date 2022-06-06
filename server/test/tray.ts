@@ -23,7 +23,7 @@ let array = {
 
 //console.log(array)
 
-class Persona {
+/* class Persona {
     constructor(name) {
         this.name = name
     };
@@ -35,4 +35,18 @@ class Persona {
 
 const pedro = new Persona("Pedro");
 
-console.log(pedro.saludar());
+console.log(pedro.saludar()); */
+
+let helloWorld: String = "Hello World!";
+
+console.log(helloWorld);
+
+declare interface User {
+    name?: String,
+    id?: Number
+};
+
+const user: User = {
+    name: "Antoñito",
+    id: 40
+};

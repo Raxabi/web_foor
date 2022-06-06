@@ -2,6 +2,10 @@ import { Router } from "express";
 import passport from "passport";
 import multer from "multer";
 
+// Importing routes controllers
+import { newProduct, renderEachProduct, renderNewProduct, renderProducts } from "../controllers/products.controller";
+import { renderPayPalLogin, renderPayPalPayment, renderPayPalCancelPayment } from "../controllers/paypal.contollers";
+
 const storage = multer.diskStorage({
     destination: "src/public/images/",
     filename: function(req, file, callback) {
@@ -14,7 +18,6 @@ const upload = multer({ storage: storage });
 
 // Import controllers
 //import { register, login, renderRegister, renderEachUser } from "../controllers/users.controllers";
-import { newProduct, renderEachProduct, renderNewProduct, renderProducts } from "../controllers/products.controller";
 
 const router = Router();
 
@@ -66,18 +69,18 @@ export default router;
     * ANTIGUAS RUTAS QUE SERAN USADAS MAS ADELANTE
 
     ! Pagina de registo
-    router.get("/register", renderRegister);
+    //router.get("/register", renderRegister);
 
     ! User Register
-    router.post("/register", register);
+    //router.post("/register", register);
 
     ! Pagina de inicio de sesion
-    router.get("/login", renderLogin)
+    //router.get("/login", renderLogin)
 
     ! Inicio de sesion local
-    router.post("/login-succesfully", login);
+    //router.post("/login-succesfully", login);
 
     ! Página por cada usuario
-    router.get("/user/:user", renderEachUser);
+    //router.get("/user/:user", renderEachUser);
 
 */
