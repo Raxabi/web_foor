@@ -1,3 +1,3 @@
-from ..modules.module import saludar
+from modules import module
 
-saludar()
+module.saludar()

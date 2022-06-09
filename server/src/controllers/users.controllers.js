@@ -7,8 +7,12 @@ export const renderRegister = (req, res) => {
     res.render("login-register");
 };
 
+export const renderLogin = (req, res) => {
+    res.render();
+};
+
 export const renderGoogleRegister = (req,res) => {
-    passport
+    //passport
 };
 
 export const renderEachUser = async (req, res) => {
@@ -25,6 +29,8 @@ export const renderEachUser = async (req, res) => {
 export const register = async (req, res) => {
     const userRegisterFetchedToDataBase = usersSchm(req.body);
     const userRegisterFetched = req.body;
+
+    console.log(userRegisterFetched);
 
     let errorClient = [];
 
@@ -61,10 +67,12 @@ export const register = async (req, res) => {
      * TODO: Eliminar la conversion de objeto a JSON para la comparacion y hacerlo iterando directamente
      * TODO: el objeto entrante, (esto hace mas limpio el codigo)
      */
-    const user_Register_Name_To_JSON = JSON.stringify(userRegisterFetched.name);
-    const user_Register_Email_To_JSON = JSON.stringify(userRegisterFetched.email);
-    const user_Email_Query_To_JSON = JSON.stringify(userEmailQuery);
-    const user_Name_Query_To_JSON = JSON.stringify(userNameQuery);
+    Object.keys(userRegisterFetched).map(key => {
+        userRegisterFetched.name = key.name
+        userRegisterFetched.email = key.email
+    });
+
+    Object.keys()
 
     // SI los datos ya existen en la base de datos, se deniega el registro
     if (user_Register_Name_To_JSON === user_Name_Query_To_JSON) {
@@ -129,7 +137,7 @@ export const login = async (req, res) => {
         }
     );
 
-    // Convertimos los objetos a objetos json para poder compararlos
+    // TODO: convertir a JSON directamente iterando sobre el objeto en vez de convertirlo manualmente
     
     const user_Login_Data = JSON.stringify(userLoginData);
     const user_Already_Registered_Data_To_Json = JSON.stringify(userAlreadyRegisteredData);
@@ -137,6 +145,7 @@ export const login = async (req, res) => {
     if(user_Login_Data !== user_Already_Registered_Data_To_Json) {
         loginError.push({error: "Los datos introducidos no son correctos o no estan registrados en la web, revisa de nuevo!"});
     };
+
     if (loginError.length > 0) {
         res.render("login", { loginError });
     } else {

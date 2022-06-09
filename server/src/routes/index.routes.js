@@ -4,6 +4,7 @@ import multer from "multer";
 
 // Importing routes controllers
 import { newProduct, renderEachProduct, renderNewProduct, renderProducts } from "../controllers/products.controller";
+import { register, login, renderRegister, renderEachUser } from "../controllers/users.controllers";
 import { renderPayPalLogin, renderPayPalPayment, renderPayPalCancelPayment } from "../controllers/paypal.contollers";
 
 const storage = multer.diskStorage({
@@ -15,9 +16,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-// Import controllers
-//import { register, login, renderRegister, renderEachUser } from "../controllers/users.controllers";
 
 const router = Router();
 
@@ -61,6 +59,17 @@ router.get("/addproducts", renderNewProduct);
 // * Ruta para guardar un nuevo producto
 router.post("/products/saveproducts", upload.single("image"), newProduct);
 
+
+// * Tests
+
+router.get("/register", renderRegister);
+
+router.post("/register", register);
+
+router.get("/login", renderLogin);
+
+router.post("/login-succesfully", login);
+
 export default router;
 
 /*
@@ -69,18 +78,17 @@ export default router;
     * ANTIGUAS RUTAS QUE SERAN USADAS MAS ADELANTE
 
     ! Pagina de registo
-    //router.get("/register", renderRegister);
+    //
 
     ! User Register
-    //router.post("/register", register);
+    //
 
     ! Pagina de inicio de sesion
-    //router.get("/login", renderLogin)
+    //
 
     ! Inicio de sesion local
-    //router.post("/login-succesfully", login);
+    //
 
     ! Página por cada usuario
     //router.get("/user/:user", renderEachUser);
-
 */
