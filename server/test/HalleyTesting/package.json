@@ -1,0 +1,10 @@
+{
+  "name": "halleytesting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "TESTS",
+  "license": "ISC"
+}
