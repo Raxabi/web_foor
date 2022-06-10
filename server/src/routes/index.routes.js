@@ -61,14 +61,14 @@ router.post("/products/saveproducts", upload.single("image"), newProduct);
 
 
 // * Tests
-
+/* 
 router.get("/register", renderRegister);
 
 router.post("/register", register);
 
 router.get("/login", renderLogin);
 
-router.post("/login-succesfully", login);
+router.post("/login-succesfully", login); */
 
 export default router;
 

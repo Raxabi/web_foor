@@ -2,7 +2,6 @@ import http from "http";
 
 let call = new http.IncomingMessage.prototype
 
-
 /**
  * Return a HTTP Header passed to the method
  * 
@@ -14,17 +13,11 @@ call.header = function(headerName) {
     } else if (!headerName) {
         throw Error("Any header must be passed to the function");
     };
-
-    let lc = headerName.toLowerCase();
-  
-    switch (lc) {
-      case 'referer':
-      case 'referrer':
-        return this.headers.referrer || this.headers.referer;
-      default:
-        return this.headers[lc];
-    };
 };
+
+call.body = function() {
+  let body = this.body
+}
 
 call.cookies = function() {
   null
