@@ -1,3 +1,5 @@
+'use strict';
+
 import http from "http";
 
 let call = new http.IncomingMessage.prototype
@@ -23,4 +25,4 @@ call.cookies = function() {
   null
 }
 
-export default call
+export default call;

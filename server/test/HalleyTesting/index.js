@@ -1,3 +1,5 @@
+'use strict';
+
 import http from "http";
 import Call from "./call.js";
 
@@ -15,16 +17,17 @@ export class Halley {
      * 
      * 
      * @param {Number} port The port is needed to indicate the server where to need listen reqeusts
-     * @param {} callback 
+     * @param {Function} callback The callback 
      */
 
     ready(port, callback) {
         new Promise((resolve, reject) => {
             resolve(
-                http.createServer().on().listen(port),
-                console.log(message)
+                http.createServer().on().listen(port)
             );
-            reject()
+            reject(
+                new TypeError
+            )
         })
     }
 }
