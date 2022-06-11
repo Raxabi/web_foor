@@ -2,7 +2,7 @@
 
 import http from "http";
 
-let call = new http.IncomingMessage.prototype
+let call = Object.create(http.IncomingMessage.prototype);
 
 /**
  * Return a HTTP Header passed to the method
